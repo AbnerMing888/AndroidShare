@@ -1,13 +1,13 @@
 # AndroidShare
 Android官网（微信，QQ，微博）集成，包含登录和分享。<br/>
-#### 欢迎关注我的微信公众号<br/>
+#### 欢迎关注我的微信公众号(微信扫一扫)<br/>
 <img src="image/abner.jpg" width="120" height="120" alt="微信公众号"/><br/>
 ## Demo效果预览<br/>
 #### apk下载<br/>
 <img src="image/share.jpg" width="120" height="120" alt="效果"/><br/>
 #### 效果<br/>
 <img src="image/sharePhone.jpg" width="200" alt="效果"/><br/>
-## 问题须知
+## 问题须知【一定要阅读】
 <p>
 1、Demo里的微信，QQ，微博的Key或者Id，都是用的测试的，大家在用的时候，务必换成自己申请的。
 </p>
@@ -228,6 +228,81 @@ ShareUtils.get().login(this, ShareUtils.WEIXIN)
  	val absoluteFile = Environment.getExternalStorageDirectory().absoluteFile
                 val imagePath = "$absoluteFile/ic_launcher.png"
                 ShareUtils.get().qwShareImage(this, ShareUtils.WEIXIN, imagePath, ShareUtils.SCENE)
+
+```
+
+### 回调
+```
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null) {
+            //QQ回调
+            ShareUtils.get().onQqActivityResult(requestCode, resultCode, data)
+            //微博回调
+            ShareUtils.get().onWbShareActivityResult(data, object : WbShareCallback {
+                override fun onComplete() {
+
+                }
+
+                override fun onError(p0: UiError?) {
+                }
+
+                override fun onCancel() {
+
+                }
+
+            })
+        }
+
+    }
+
+```
+
+### WXEntryActivity
+```
+class WXEntryActivity : Activity(), IWXAPIEventHandler {
+
+    private var mIWXAPI: IWXAPI? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mIWXAPI = WXAPIFactory.createWXAPI(this, BuildConfig.WX_ID)
+        mIWXAPI!!.handleIntent(intent, this)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        mIWXAPI!!.handleIntent(intent, this)
+    }
+
+    override fun onReq(resp: BaseReq?) {
+
+    }
+
+    override fun onResp(resp: BaseResp?) {
+        when (resp!!.errCode) {
+            BaseResp.ErrCode.ERR_OK -> {
+                if (resp.type == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {
+                    //分享,做一些其他操作
+
+                    finish()
+                } else if (resp.type == ConstantsAPI.COMMAND_SENDAUTH) { //登陆
+                    val code = (resp as SendAuth.Resp).code
+                    Toast.makeText(this, "微信登录成功", Toast.LENGTH_LONG).show()
+
+                    //根据code，和服务端进行绑定，获取信息后执行后续操作
+
+                    finish()
+                }
+            }
+            else -> {
+                finish()
+            }
+        }
+    }
+
+}
 
 ```
 
