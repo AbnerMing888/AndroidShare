@@ -3,7 +3,7 @@ Android官网（微信，QQ，微博）集成，包含登录和分享。<br/>
 #### 欢迎关注我的微信公众号(微信扫一扫)<br/>
 <img src="image/abner.jpg" width="120" height="120" alt="微信公众号"/><br/>
 ## Demo效果预览<br/>
-#### apk下载<br/>
+#### apk下载【读下问题须知第3条】<br/>
 <img src="image/share.jpg" width="120" height="120" alt="效果"/><br/>
 #### 效果<br/>
 <img src="image/sharePhone.jpg" width="200" alt="效果"/><br/>
