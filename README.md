@@ -1,8 +1,8 @@
 # AndroidShare
 Android官网（微信，QQ，微博）集成，包含登录和分享。<br/>
 ## Demo效果预览<br/>
-![Image 扫描下载](image/share.jpg)<br/>
-![Image 效果](image/sharePhone.jpg width='100')<br/>
+<img src="image/share.jpg" width="100" height="100" alt="效果"/><br/>
+<img src="image/sharePhone.jpg" width="200" alt="效果"/><br/>
 ## 问题须知
 <p>
 1、Demo里的微信，QQ，微博，都是用的测试的，大家在用的时候，务必换成自己。
